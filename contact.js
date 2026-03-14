@@ -50,9 +50,11 @@
     try {
 
       await emailjs.sendForm(
-        "service_4t8ryix",
-        "template_132q69l",
-        form
+  "service_4t8ryix",
+  "template_132q69l",
+  form,
+  "q8I2Du5DDRbzjVnhH"
+);
       );
 
       submitBtn.innerHTML = origText;
