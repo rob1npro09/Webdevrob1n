@@ -46,10 +46,14 @@
 
                 <div class="contact-grid">
                     <div class="contact-info animate-up delay-2">
-                        <p>I'm open to freelance opportunities, collaborations, and learning projects. My inbox is always open!</p>
-                        
+                        <p>
+                            I'm open to freelance opportunities, collaborations, and learning projects.
+                            Whether you need a website, a Discord bot, or just want to say hi —
+                            my inbox is open!
+                        </p>
+
                         <div class="contact-methods">
-                            <div class="contact-method" onclick="location.href='mailto:borseujjwal24@gmail.com'">
+                            <div class="contact-method" onclick="window.location.href='mailto:borseujjwal24@gmail.com'">
                                 <div class="contact-method-icon">✉</div>
                                 <div class="contact-method-info">
                                     <span class="contact-method-label">Email</span>
@@ -57,7 +61,7 @@
                                 </div>
                             </div>
 
-                            <div class="contact-method purple-icon" onclick="window.open('https://discord.gg/8BrMcHVp','_blank')">
+                            <div class="contact-method purple-icon" onclick="window.open('https://discord.gg/8BrMcHVp','_blank')" style="cursor:pointer;">
                                 <div class="contact-method-icon">💬</div>
                                 <div class="contact-method-info">
                                     <span class="contact-method-label">Discord</span>
@@ -68,12 +72,18 @@
 
                         <div class="contact-avail">
                             <span class="dot"></span>
-                            <span class="contact-avail-text"><strong>Available</strong> for small freelance projects</span>
+                            <span class="contact-avail-text">
+                                <strong>Available</strong> for small freelance projects
+                            </span>
                         </div>
                     </div>
 
                     <div class="contact-form-wrap animate-up delay-3">
-                        <h2 class="contact-form-title">Send a Message <span>// drop me a line</span></h2>
+                        <h2 class="contact-form-title">
+                            Send a Message
+                            <span>// drop me a line</span>
+                        </h2>
+
                         <form id="contact-form" class="contact-form">
                             <div class="form-row">
                                 <div class="form-group">
@@ -93,10 +103,13 @@
 
                             <div class="form-group">
                                 <label for="message" class="form-label">Message</label>
-                                <textarea id="message" name="message" class="form-textarea" placeholder="Tell me about your project..." required></textarea>
+                                <textarea id="message" name="message" class="form-textarea" placeholder="Tell me about your project or idea…" required></textarea>
                             </div>
 
-                            <button type="submit" id="submit-btn" class="btn btn-primary form-submit">Send Message →</button>
+                            <button type="submit" id="submit-btn" class="btn btn-primary form-submit">
+                                Send Message →
+                            </button>
+
                             <div id="form-status" class="form-status"></div>
                         </form>
                     </div>
@@ -109,12 +122,16 @@
                 <div class="donate-card">
                     <p class="donate-label">Support</p>
                     <h2 class="donate-title">Support My Work</h2>
-                    <p class="donate-desc">I'm a student building skills from scratch. Even a small contribution means a lot!</p>
-                    
+                    <p class="donate-desc">
+                        I'm a student building skills and projects from scratch.
+                        If you've found my work helpful or want to support my learning journey,
+                        even a small contribution means a lot!
+                    </p>
+
                     <div class="upi-box">
                         <p class="upi-label">UPI ID</p>
-                        <p class="upi-id" id="upi-text">ujjwal999@fam</p>
-                        <button class="upi-copy-btn" id="copy-upi">Copy UPI ID</button>
+                        <p class="upi-id" id="upi-id-text">ujjwal999@fam</p>
+                        <button class="upi-copy-btn" id="copy-upi-btn">Copy UPI ID</button>
                     </div>
                 </div>
             </div>
