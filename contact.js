@@ -1,133 +1,94 @@
-'use strict';
+"use strict";
 
-/* ==============================
-   CONTACT FORM + EMAILJS
-============================== */
+/* ========= EMAILJS CONTACT FORM ========= */
 
-(function initContactForm(){
+document.addEventListener("DOMContentLoaded", function () {
 
-const form = document.querySelector('.contact-form');
-const status = document.querySelector('.form-status');
-const submitBtn = document.querySelector('.form-submit');
+const form = document.querySelector(".contact-form");
+const status = document.querySelector(".form-status");
+const submitBtn = document.querySelector(".form-submit");
 
 if(!form) return;
 
-form.addEventListener('submit', async (e)=>{
+form.addEventListener("submit", function(e){
 
 e.preventDefault();
 
-/* validation */
+submitBtn.disabled = true;
+submitBtn.innerText = "Sending...";
 
-const required = form.querySelectorAll('[required]');
-let valid = true;
-
-required.forEach(field=>{
-field.classList.remove('error');
-
-if(!field.value.trim()){
-field.classList.add('error');
-valid=false;
-}
-
-});
-
-const emailField = form.querySelector('[type="email"]');
-
-if(emailField){
-const regex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-
-if(!regex.test(emailField.value)){
-emailField.classList.add('error');
-valid=false;
-}
-}
-
-if(!valid){
-showStatus('error','⚠ Please fill all fields correctly.');
-return;
-}
-
-/* loading */
-
-const original = submitBtn.innerHTML;
-submitBtn.innerHTML="Sending...";
-submitBtn.disabled=true;
-
-try{
-
-await emailjs.sendForm(
+emailjs.sendForm(
 "service_4t8ryix",
 "template_132q69l",
-form,
-"q8I2Du5DDRbzjVnhH"
-);
+form
+)
 
-submitBtn.innerHTML=original;
-submitBtn.disabled=false;
+.then(function(){
 
-showStatus('success',"✓ Message sent successfully!");
+status.className = "form-status success";
+status.innerText = "Message sent successfully!";
+
+submitBtn.disabled = false;
+submitBtn.innerText = "Send Message →";
+
 form.reset();
 
-}catch(err){
+})
 
-submitBtn.innerHTML=original;
-submitBtn.disabled=false;
+.catch(function(error){
 
-showStatus('error',"⚠ Failed to send message.");
-console.error(err);
+console.error(error);
 
-}
+status.className = "form-status error";
+status.innerText = "Failed to send message.";
+
+submitBtn.disabled = false;
+submitBtn.innerText = "Send Message →";
+
+});
+
+});
 
 });
 
 
-function showStatus(type,msg){
+/* ========= UPI COPY BUTTON ========= */
 
-if(!status) return;
+document.addEventListener("DOMContentLoaded", function(){
 
-status.className=`form-status ${type}`;
-status.textContent=msg;
-status.style.display="block";
+const btn = document.querySelector(".upi-copy-btn");
+const upi = document.querySelector(".upi-id");
 
-setTimeout(()=>{
-status.style.display="none";
-},5000);
+if(!btn || !upi) return;
 
-}
+btn.addEventListener("click", function(){
 
-})();
+navigator.clipboard.writeText(upi.innerText);
 
+btn.innerText = "Copied!";
 
-/* ==============================
-   EMAIL CLICK
-============================== */
+setTimeout(function(){
+btn.innerText = "Copy UPI ID";
+},2000);
 
-(function(){
-
-const emailCard=document.querySelector('[data-email]');
-
-if(!emailCard) return;
-
-emailCard.addEventListener('click',()=>{
-const email=emailCard.dataset.email;
-window.location.href=`mailto:${email}`;
 });
 
-})();
-
-
-/* ==============================
-   DISCORD CLICK
-============================== */
-
-(function(){
-
-const discord=document.querySelector('.purple-icon');
-
-if(!discord) return;
-
-discord.addEventListener('click',()=>{
-window.open("https://discord.gg/8BrMcHVp","_blank");
 });
 
-})();
+
+/* ========= EMAIL CLICK ========= */
+
+document.addEventListener("DOMContentLoaded", function(){
+
+const emailBox = document.querySelector("[data-email]");
+
+if(!emailBox) return;
+
+emailBox.addEventListener("click", function(){
+
+const email = emailBox.getAttribute("data-email");
+window.location.href = "mailto:" + email;
+
+});
+
+});
