@@ -1,103 +1,133 @@
-/* ================================================
-   WEBDEVROB1N — Contact JS (contact.js)
-   ================================================ */
-
 'use strict';
 
-// ── Contact form handler ──
-(function initContactForm() {
-  const form = document.querySelector('.contact-form');
-  const status = document.querySelector('.form-status');
-  const submitBtn = document.querySelector('.form-submit');
+/* ==============================
+   CONTACT FORM + EMAILJS
+============================== */
 
-  if (!form) return;
+(function initContactForm(){
 
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
+const form = document.querySelector('.contact-form');
+const status = document.querySelector('.form-status');
+const submitBtn = document.querySelector('.form-submit');
 
-    // Basic validation
-    const required = form.querySelectorAll('[required]');
-    let valid = true;
+if(!form) return;
 
-    required.forEach(field => {
-      field.classList.remove('error');
-      if (!field.value.trim()) {
-        field.classList.add('error');
-        valid = false;
-      }
-    });
+form.addEventListener('submit', async (e)=>{
 
-    // Email validation
-    const emailField = form.querySelector('[type="email"]');
-    if (emailField && emailField.value) {
-      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-      if (!emailRegex.test(emailField.value)) {
-        emailField.classList.add('error');
-        valid = false;
-      }
-    }
+e.preventDefault();
 
-    if (!valid) {
-      showStatus('error', '⚠ Please fill in all required fields correctly.');
-      return;
-    }
+/* validation */
 
-    // Loading state
-    const origText = submitBtn.innerHTML;
-    submitBtn.innerHTML = '⟳ Sending…';
-    submitBtn.disabled = true;
+const required = form.querySelectorAll('[required]');
+let valid = true;
 
-    try {
+required.forEach(field=>{
+field.classList.remove('error');
 
-      await emailjs.sendForm(
-  "service_4t8ryix",
-  "template_132q69l",
-  form,
-  "q8I2Du5DDRbzjVnhH"
+if(!field.value.trim()){
+field.classList.add('error');
+valid=false;
+}
+
+});
+
+const emailField = form.querySelector('[type="email"]');
+
+if(emailField){
+const regex=/^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+if(!regex.test(emailField.value)){
+emailField.classList.add('error');
+valid=false;
+}
+}
+
+if(!valid){
+showStatus('error','⚠ Please fill all fields correctly.');
+return;
+}
+
+/* loading */
+
+const original = submitBtn.innerHTML;
+submitBtn.innerHTML="Sending...";
+submitBtn.disabled=true;
+
+try{
+
+await emailjs.sendForm(
+"service_4t8ryix",
+"template_132q69l",
+form,
+"q8I2Du5DDRbzjVnhH"
 );
-      );
 
-      submitBtn.innerHTML = origText;
-      submitBtn.disabled = false;
+submitBtn.innerHTML=original;
+submitBtn.disabled=false;
 
-      showStatus('success', "✓ Message sent! I'll get back to you soon.");
-      form.reset();
+showStatus('success',"✓ Message sent successfully!");
+form.reset();
 
-    } catch (error) {
+}catch(err){
 
-      submitBtn.innerHTML = origText;
-      submitBtn.disabled = false;
+submitBtn.innerHTML=original;
+submitBtn.disabled=false;
 
-      showStatus('error', '⚠ Failed to send message. Please try again.');
-      console.error(error);
+showStatus('error',"⚠ Failed to send message.");
+console.error(err);
 
-    }
+}
 
-  });
+});
 
-  function showStatus(type, msg) {
-    if (!status) return;
-    status.className = `form-status ${type}`;
-    status.textContent = msg;
-    status.style.display = 'block';
 
-    setTimeout(() => {
-      status.style.display = 'none';
-    }, 5000);
-  }
+function showStatus(type,msg){
 
-  // Input error styling injection
-  if (!document.querySelector('#form-error-styles')) {
-    const s = document.createElement('style');
-    s.id = 'form-error-styles';
-    s.textContent = `
-      .form-input.error,
-      .form-textarea.error {
-        border-color: rgba(255, 95, 87, 0.6) !important;
-        box-shadow: 0 0 0 3px rgba(255, 95, 87, 0.08) !important;
-      }
-    `;
-    document.head.appendChild(s);
-  }
+if(!status) return;
+
+status.className=`form-status ${type}`;
+status.textContent=msg;
+status.style.display="block";
+
+setTimeout(()=>{
+status.style.display="none";
+},5000);
+
+}
+
+})();
+
+
+/* ==============================
+   EMAIL CLICK
+============================== */
+
+(function(){
+
+const emailCard=document.querySelector('[data-email]');
+
+if(!emailCard) return;
+
+emailCard.addEventListener('click',()=>{
+const email=emailCard.dataset.email;
+window.location.href=`mailto:${email}`;
+});
+
+})();
+
+
+/* ==============================
+   DISCORD CLICK
+============================== */
+
+(function(){
+
+const discord=document.querySelector('.purple-icon');
+
+if(!discord) return;
+
+discord.addEventListener('click',()=>{
+window.open("https://discord.gg/8BrMcHVp","_blank");
+});
 
 })();
